@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.github.hahmadfaiq21.simplenotification"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.github.hahmadfaiq21.simplenotification"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
