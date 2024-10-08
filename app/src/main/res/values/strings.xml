@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SimpleNotification</string>
+    <string name="send_notification">Send Notification</string>
+    <string name="notification_title">Notification Title</string>
+    <string name="notification_message">Notification Message</string>
+    <string name="notification_subtext">Notification Subtext</string>
+    <string name="open_detail">Open Detail</string>
+    <string name="title">Title</string>
+    <string name="message">Message</string>
+</resources>
