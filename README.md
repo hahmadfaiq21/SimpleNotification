@@ -1,4 +1,8 @@
 ﻿# SimpleNotification
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/acab7ff4-397f-4e3c-ab16-90c6a45a5b48">
+</p>
+
 Notifications in Android are essential tools for keeping users informed and engaged with timely updates, even when they are not actively using an app. These notifications appear in various places such as the status bar, notification drawer, and lock screen, providing users with reminders, messages, or other important information. By leveraging features like notification channels, groups, and actions, developers can create rich, interactive notifications that enhance user experience and ensure critical information is always accessible. For more: https://developer.android.com/develop/ui/views/notifications
 
 # Notification Anatomy
