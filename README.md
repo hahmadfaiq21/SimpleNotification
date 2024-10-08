@@ -52,4 +52,7 @@ Sets the priority of the notification. PRIORITY_DEFAULT indicates that the notif
 <br>
 This notification will show a small icon, a title, a message, and an optional subtext, and it will open an Activity or perform some other action when tapped. It will disappear once the user interacts with it.
 
-# 
+# SimpleNotification Interfaces
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4ec8d677-8833-4b4e-a21b-04e8c78ce998">
+</p>
