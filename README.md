@@ -32,31 +32,29 @@ NotificationCompat.Builder(this, CHANNEL_ID)
 Breakdown code: <br>
 **a. NotificationCompat.Builder(this, CHANNEL_ID)** <br>
 Creates a NotificationCompat.Builder object, which will be used to configure the notification. The this parameter refers to the current context (likely an Activity or Service), and CHANNEL_ID is the ID of the notification channel, which is required for Android 8.0 (Oreo) and above to group notifications. <br>
-
 **b. setSmallIcon(R.drawable.ic_notification)** <br>
 Sets a small icon to be displayed in the status bar and on the notification itself. R.drawable.ic_notification refers to a drawable resource in the app that serves as the icon for the notification. <br>
-
 **c. setContentTitle(title)** <br>
 Sets the title of the notification, typically a short string that summarizes the purpose of the notification. The title variable holds the text value for the title. <br>
-
 **d. setContentText(message)** <br>
 Sets the main text content of the notification, which provides more details about what the notification is about. The message variable holds this text. <br>
-
 **e. setSubText(subtext)** <br>
 Adds a smaller piece of text, often displayed below the content text in the notification, which can provide additional information. The subtext variable holds this value. <br>
-
 **f. setContentIntent(pendingIntent)** <br>
 Defines an action to take when the user taps the notification. The pendingIntent is a wrapper around an Intent that defines what should happen (e.g., opening an Activity). <br>
-
 **g. setAutoCancel(true)** <br>
 Ensures that the notification is automatically dismissed when the user taps it. <br>
-
 **h. setPriority(NotificationCompat.PRIORITY_DEFAULT)** <br>
 Sets the priority of the notification. PRIORITY_DEFAULT indicates that the notification should have the standard priority, meaning it will appear in the status bar without being overly intrusive. <br>
 <br>
 This notification will show a small icon, a title, a message, and an optional subtext, and it will open an Activity or perform some other action when tapped. It will disappear once the user interacts with it.
 
 # Back Stack
+**Back stack** is a crucial concept that manages the navigation history of activities within an application. It operates as a **"last in, first out" (LIFO)** data structure, meaning the most recently added activity is the first to be removed when the user presses the back button. This mechanism ensures a seamless user experience by allowing users to navigate back through their previous screens in the order they were accessed. Understanding and effectively managing the back stack is essential for creating intuitive and user-friendly Android applications. For more: https://developer.android.com/guide/navigation/backstack
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d5eb731f-324e-429a-9c31-49076d0e1f03">
+</p>
 
 # SimpleNotification Interfaces
 <p align="center">
