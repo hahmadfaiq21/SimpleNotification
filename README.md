@@ -84,6 +84,35 @@ If MainActivity is already at the top of the back stack and an intent tries to o
 **b. android:parentActivityName=".MainActivity"** <br>
 This attribute indicates that the mentioned activity (in this case, **DetailActivity**) has a parent activity, which is **MainActivity**. This means that when the user is in **DetailActivity**, if they press the **back button**, they will be taken back to **MainActivity**. This helps **define a hierarchical navigation structure** within the app. It is often associated with the use of **NavUtils** or **AppBarConfiguration** in the code to manage navigation between activities.
 
+### MainActivity.kt
+```Kotlin
+..
+
+private fun sendNotification(title: String, message: String) {
+val notifDetailIntent = Intent(this, DetailActivity::class.java)
+notifDetailIntent.putExtra(DetailActivity.EXTRA_TITLE, title)
+notifDetailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, message)
+ 
+val pendingIntent = TaskStackBuilder.create(this).run {
+    addNextIntentWithParentStack(notifDetailIntent)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    } else {
+        getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
+..
+  }
+
+..
+}
+
+..
+
+```
+#### Explanation:
+Here we utilize the **TaskStackBuilder API** to **create a new back stack** that will be inserted into an existing task. When the **DetailActivity** class is run, then the user presses the back button either the system back button or the up button, then the user will be directed to the **ParentActivity** of **DetailActivity** hat we have done in **AndroidManifest.xml**.
+
 # SimpleNotification Interfaces
 <p align="center">
   <img src="https://github.com/user-attachments/assets/4ec8d677-8833-4b4e-a21b-04e8c78ce998">
