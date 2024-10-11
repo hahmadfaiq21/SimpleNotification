@@ -56,6 +56,34 @@ This notification will show a small icon, a title, a message, and an optional su
   <img src="https://github.com/user-attachments/assets/d5eb731f-324e-429a-9c31-49076d0e1f03">
 </p>
 
+### AndroidManifest.xml
+Add **android:launchMode="singleTop"** attribute to **MainActivity** and **android:parentActivityName=".MainActivity"** to **DetailActivity**.
+
+```XML
+...
+<activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DetailActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
+...
+```
+#### Explanation:
+**a. android:launchMode="singleTop"** <br>
+This attribute defines how the activity will be launched if it is already in the back stack. With **singleTop**, if the activity is already at the top of the back stack, Android will not create a new instance of that activity but will reuse the existing one. This is useful for **avoiding duplicate activities**, especially in scenarios like opening the app through a notification or navigating back to the same activity. An example where **launchMode="singleTop"** is relevant:
+If MainActivity is already at the top of the back stack and an intent tries to open that activity again, the existing MainActivity will be used instead of creating a new instance.
+
+**b. android:parentActivityName=".MainActivity"** <br>
+This attribute indicates that the mentioned activity (in this case, **DetailActivity**) has a parent activity, which is **MainActivity**. This means that when the user is in **DetailActivity**, if they press the **back button**, they will be taken back to **MainActivity**. This helps **define a hierarchical navigation structure** within the app. It is often associated with the use of **NavUtils** or **AppBarConfiguration** in the code to manage navigation between activities.
+
 # SimpleNotification Interfaces
 <p align="center">
   <img src="https://github.com/user-attachments/assets/4ec8d677-8833-4b4e-a21b-04e8c78ce998">
