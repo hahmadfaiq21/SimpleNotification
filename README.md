@@ -1,4 +1,4 @@
-﻿# SimpleNotification
+﻿# Basic Notification with Back Stack
 <p align="center">
   <img src="https://github.com/user-attachments/assets/acab7ff4-397f-4e3c-ab16-90c6a45a5b48">
 </p>
