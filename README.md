@@ -89,20 +89,18 @@ This attribute indicates that the mentioned activity (in this case, **DetailActi
 ..
 
 private fun sendNotification(title: String, message: String) {
-val notifDetailIntent = Intent(this, DetailActivity::class.java)
-notifDetailIntent.putExtra(DetailActivity.EXTRA_TITLE, title)
-notifDetailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, message)
+    val notifDetailIntent = Intent(this, DetailActivity::class.java)
+    notifDetailIntent.putExtra(DetailActivity.EXTRA_TITLE, title)
+    notifDetailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, message)
  
-val pendingIntent = TaskStackBuilder.create(this).run {
-    addNextIntentWithParentStack(notifDetailIntent)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-    } else {
-        getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT)
+    val pendingIntent = TaskStackBuilder.create(this).run {
+        addNextIntentWithParentStack(notifDetailIntent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
     }
-
-..
-  }
 
 ..
 }
