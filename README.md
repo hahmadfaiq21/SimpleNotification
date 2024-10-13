@@ -1,4 +1,4 @@
-﻿# SimpleNotification App: Basic Notification with Back Stack
+﻿# SimpleNotification App: Basic Notification with Pending Intent and Back Stack
 <p align="center">
   <img src="https://github.com/user-attachments/assets/acab7ff4-397f-4e3c-ab16-90c6a45a5b48">
 </p>
@@ -29,7 +29,7 @@ NotificationCompat.Builder(this, CHANNEL_ID)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 ```
-Breakdown code: <br>
+#### Breakdown code:
 **a. NotificationCompat.Builder(this, CHANNEL_ID)** <br>
 Creates a NotificationCompat.Builder object, which will be used to configure the notification. The this parameter refers to the current context (likely an Activity or Service), and CHANNEL_ID is the ID of the notification channel, which is required for Android 8.0 (Oreo) and above to group notifications. <br>
 **b. setSmallIcon(R.drawable.ic_notification)** <br>
@@ -49,14 +49,31 @@ Sets the priority of the notification. PRIORITY_DEFAULT indicates that the notif
 <br>
 This notification will show a small icon, a title, a message, and an optional subtext, and it will open an Activity or perform some other action when tapped. It will disappear once the user interacts with it.
 
-# Back Stack
+### A. Pending Intent
+PendingIntent wraps an Intent, allowing it for creating interactive notifications, as it allows users to perform actions directly from the notification itself, such as opening an activity, sending a broadcast, or starting a service.
+#### MainActivity.kt
+```Kotlin
+..
+
+private fun sendNotification(title: String, message: String, subtext: String) {
+        val notificationDetailIntent = Intent(this, DetailActivity::class.java)
+        notificationDetailIntent.putExtra(DetailActivity.EXTRA_TITLE, title)
+        notificationDetailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, message)
+        val pendingIntent = TaskStackBuilder.create(this).run {
+            addNextIntentWithParentStack(notificationDetailIntent)
+            ..
+        }
+        ..
+}
+
+..
+```
+This code prepares an Intent with data to open DetailActivity when the user taps the notification.
+
+### B. Back Stack
 **Back stack** is a crucial concept that manages the navigation history of activities within an application. It operates as a **"last in, first out" (LIFO)** data structure, meaning the most recently added activity is the first to be removed when the user presses the back button. This mechanism ensures a seamless user experience by allowing users to navigate back through their previous screens in the order they were accessed. Understanding and effectively managing the back stack is essential for creating intuitive and user-friendly Android applications. For more: https://developer.android.com/guide/navigation/backstack
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/d5eb731f-324e-429a-9c31-49076d0e1f03">
-</p>
-
-### AndroidManifest.xml
+#### AndroidManifest.xml
 Add **android:launchMode="singleTop"** attribute to **MainActivity** and **android:parentActivityName=".MainActivity"** to **DetailActivity**.
 
 ```XML
@@ -76,7 +93,7 @@ Add **android:launchMode="singleTop"** attribute to **MainActivity** and **andro
         </activity>
 ...
 ```
-#### Explanation:
+#### Breakdown Code:
 **a. android:launchMode="singleTop"** <br>
 This attribute defines how the activity will be launched if it is already in the back stack. With **singleTop**, if the activity is already at the top of the back stack, Android will not create a new instance of that activity but will reuse the existing one. This is useful for **avoiding duplicate activities**, especially in scenarios like opening the app through a notification or navigating back to the same activity. An example where **launchMode="singleTop"** is relevant:
 If MainActivity is already at the top of the back stack and an intent tries to open that activity again, the existing MainActivity will be used instead of creating a new instance.
@@ -84,32 +101,36 @@ If MainActivity is already at the top of the back stack and an intent tries to o
 **b. android:parentActivityName=".MainActivity"** <br>
 This attribute indicates that the mentioned activity (in this case, **DetailActivity**) has a parent activity, which is **MainActivity**. This means that when the user is in **DetailActivity**, if they press the **back button**, they will be taken back to **MainActivity**. This helps **define a hierarchical navigation structure** within the app. It is often associated with the use of **NavUtils** or **AppBarConfiguration** in the code to manage navigation between activities.
 
-### MainActivity.kt
+#### MainActivity.kt
 ```Kotlin
 ..
 
-private fun sendNotification(title: String, message: String) {
-    val notifDetailIntent = Intent(this, DetailActivity::class.java)
-    notifDetailIntent.putExtra(DetailActivity.EXTRA_TITLE, title)
-    notifDetailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, message)
- 
-    val pendingIntent = TaskStackBuilder.create(this).run {
-        addNextIntentWithParentStack(notifDetailIntent)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        } else {
-            getPendingIntent(NOTIFICATION_ID, PendingIntent.FLAG_UPDATE_CURRENT)
+private fun sendNotification(title: String, message: String, subtext: String) {
+        ..
+        val pendingIntent = TaskStackBuilder.create(this).run {
+            addNextIntentWithParentStack(notificationDetailIntent)
+            getPendingIntent(
+                NOTIFICATION_ID,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
         }
-    }
-
-..
+        ..
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            ..
+            .setContentIntent(pendingIntent)
+            ..
+        ..
 }
 
 ..
 
 ```
-#### Explanation:
 Here we utilize the **TaskStackBuilder API** to **create a new back stack** that will be inserted into an existing task. When the **DetailActivity** class is run, then the user presses the back button either the system back button or the up button, then the user will be directed to the **ParentActivity** of **DetailActivity** hat we have done in **AndroidManifest.xml**.
+
+### Result
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e17f963f-3401-4c43-a412-04eefcad7784">
+</p>
 
 # SimpleNotification Interfaces
 <p align="center">
